@@ -4,3 +4,9 @@
     list-style: none;
     box-sizing: border-box;
 }
+#root > div {
+    max-width: 800px;
+    max-height: 600px;
+    height: 100vh;
+    margin: 0 auto;
+}
