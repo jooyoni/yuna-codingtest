@@ -1,0 +1,65 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+    position: relative;
+    .createReservationBtn {
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+        border-radius: 10px;
+        border: none;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        gap: 5px;
+        left: 20px;
+        right: auto !important;
+        svg {
+            width: 20px;
+            height: 20px;
+            path {
+                fill: #ec551f;
+            }
+        }
+        span {
+            color: #ec551f;
+            font-weight: 700;
+        }
+    }
+    h3 {
+        font-size: 20px;
+        font-weight: 500;
+        color: #57534e;
+    }
+    .closeBtn {
+        width: 20px;
+        height: 20px;
+    }
+    .backBtn {
+        left: 20px;
+        right: auto !important;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border-radius: 10px;
+        border: none;
+        background-color: white;
+        svg {
+            width: 25px;
+            height: 25px;
+        }
+    }
+    .createReservationBtn,
+    .closeBtn,
+    .backBtn {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+    }
+}
