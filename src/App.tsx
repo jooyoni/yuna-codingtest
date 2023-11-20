@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Main from './pages/Main/Main';
-import CreateReservation from './pages/CreateReservation/CreateReservation';
+import PostReservation from './pages/PostReservation/PostReservation';
 
 function App() {
     return (
@@ -11,7 +11,11 @@ function App() {
                     <Route path='/' element={<Main />} />
                     <Route
                         path='/new-reservation'
-                        element={<CreateReservation />}
+                        element={<PostReservation />}
+                    />
+                    <Route
+                        path='/edit-reservation'
+                        element={<PostReservation />}
                     />
                 </Routes>
             </BrowserRouter>

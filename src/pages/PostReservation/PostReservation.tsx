@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
-import styles from './CreateReservation.module.scss';
+import styles from './PostReservation.module.scss';
 import { ReactComponent as CalendarIcon } from '../../assets/event_available.svg';
 import { ReactComponent as PlusIcon } from '../../assets/math-plus.svg';
 import { ReactComponent as MinusIcon } from '../../assets/math-minus.svg';
@@ -12,16 +12,16 @@ import DatePicker from '../../components/DatePicker/DatePicker';
 import { timeConverter } from '../../common/timeConverter';
 import tableData from '../../common/tableData.json';
 import { useAppDispatch } from '../../store/store';
-import { addReservation } from '../../store/reservationSlice';
+import { postReservation } from '../../store/reservationSlice';
+import getToday from '../../common/getToday';
 
-function CreateReservation() {
+function PostReservation() {
+    const { state } = useLocation();
+    console.log(state);
+
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const today = {
-        year: new Date().getFullYear(),
-        month: new Date().getMonth() + 1,
-        date: new Date().getDate(),
-    };
+    const today = getToday();
     const {
         register,
         handleSubmit,
@@ -40,13 +40,13 @@ function CreateReservation() {
         note: string;
     }>({
         defaultValues: {
-            name: '',
-            phone: '',
-            date: undefined,
-            time: undefined,
-            headCounter: 1,
-            tableList: {},
-            note: '',
+            name: state?.name || '',
+            phone: state?.phone || '',
+            date: state?.date || undefined,
+            time: state?.time || undefined,
+            headCounter: state?.headCounter || 1,
+            tableList: state?.tableList || {},
+            note: state?.note || '',
         },
     });
     const [tableListOpen, setTableListOpen] = useState(false);
@@ -77,8 +77,8 @@ function CreateReservation() {
 
     function onSubmit() {
         dispatch(
-            addReservation({
-                id: new Date().getTime(),
+            postReservation({
+                id: state?.reservationKey || new Date().getTime(),
                 name: getValues('name'),
                 phone: getValues('phone'),
                 date: getValues('date'),
@@ -92,7 +92,7 @@ function CreateReservation() {
     }
     return (
         <>
-            <Header title='New Reservation' />
+            <Header title={state ? 'Edit Reservation' : 'New Reservation'} />
             <div className={styles.container}>
                 <form
                     className={styles.reservationForm}
@@ -331,8 +331,14 @@ function CreateReservation() {
                             {...register('note')}
                         />
                         <p
+                            className={
+                                !getValues('note') ? styles.placeholder : ''
+                            }
                             dangerouslySetInnerHTML={{
-                                __html: `${getValues('note')}`,
+                                __html: `${
+                                    getValues('note').replace(/ /g, '&nbsp;') ||
+                                    'Add Note...'
+                                }`,
                             }}
                         />
                     </div>
@@ -347,6 +353,20 @@ function CreateReservation() {
                 </form>
                 {datePickerOpen && (
                     <DatePicker
+                        propsDate={
+                            getValues('date') && {
+                                year: getValues('date.year'),
+                                month: getValues('date.month'),
+                                date: getValues('date.date'),
+                            }
+                        }
+                        propsTime={
+                            getValues('time') && {
+                                hour: getValues('time.hour'),
+                                minute: getValues('time.minute'),
+                                isAm: getValues('time.isAm'),
+                            }
+                        }
                         setDatePickerOpen={setDatePickerOpen}
                         handleSetReservationDate={handleSetReservationDate}
                     />
@@ -355,4 +375,4 @@ function CreateReservation() {
         </>
     );
 }
-export default CreateReservation;
+export default PostReservation;

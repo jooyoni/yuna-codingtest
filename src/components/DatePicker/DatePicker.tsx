@@ -6,8 +6,19 @@ import { ReactComponent as UpIcon } from '../../assets/chevron-up.svg';
 import { ReactComponent as DownIcon } from '../../assets/chevron-down.svg';
 import { ReactComponent as TrashIcon } from '../../assets/trash.svg';
 import { timeConverter } from '../../common/timeConverter';
+import getToday from '../../common/getToday';
 
 interface IPropsType {
+    propsDate?: {
+        year: number;
+        month: number;
+        date: number;
+    };
+    propsTime?: {
+        hour: number;
+        minute: number;
+        isAm: boolean;
+    };
     setDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
     handleSetReservationDate: (
         date?: {
@@ -24,17 +35,20 @@ interface IPropsType {
 }
 
 function DatePicker({
+    propsDate,
+    propsTime,
     setDatePickerOpen,
     handleSetReservationDate,
 }: IPropsType) {
+    const today = getToday();
     const [pickingInfo, setPickingInfo] = useState<'date' | 'time'>('date');
-    const [year, setYear] = useState(2023);
-    const [month, setMonth] = useState(11);
-    const [date, setDate] = useState(20);
+    const [year, setYear] = useState(propsDate?.year || today.year);
+    const [month, setMonth] = useState(propsDate?.month || today.month);
+    const [date, setDate] = useState(propsDate?.date || today.date);
 
-    const [hour, setHour] = useState(2);
-    const [minute, setMinute] = useState(0);
-    const [isAm, setIsAm] = useState(true);
+    const [hour, setHour] = useState(propsTime?.hour || 0);
+    const [minute, setMinute] = useState(propsTime?.minute || 0);
+    const [isAm, setIsAm] = useState<boolean>(propsTime?.isAm || true);
 
     const isPickingDate = pickingInfo === 'date';
 

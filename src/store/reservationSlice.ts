@@ -1,17 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IStateType {
-    [id: number]: {
+export interface IReservationType {
+    [key: number]: {
         name: string;
         phone: string;
         date: undefined | { year: number; month: number; date: number };
         time: undefined | { hour: number; minute: number; isAm: boolean };
         headCounter: number;
-        tableList:
-            | undefined
-            | { [key: string]: { floor: number; table: number } };
+        tableList: { [key: string]: { floor: number; table: number } };
         note: string;
-        isShowing: true;
+        isShowing: boolean;
     };
 }
 interface IPayloadType {
@@ -25,13 +23,13 @@ interface IPayloadType {
     note: string;
 }
 
-const initialState: IStateType = {};
+const initialState: IReservationType = {};
 
 export const reservationSlice = createSlice({
     name: 'counter',
     initialState,
     reducers: {
-        addReservation(state, action: PayloadAction<IPayloadType>) {
+        postReservation(state, action: PayloadAction<IPayloadType>) {
             state[action.payload.id] = {
                 name: action.payload.name,
                 phone: action.payload.phone,
@@ -43,9 +41,22 @@ export const reservationSlice = createSlice({
                 isShowing: true,
             };
         },
+        deleteReservation(
+            state,
+            action: PayloadAction<{ reservationKey: number }>
+        ) {
+            delete state[action.payload.reservationKey];
+        },
+        hideReservation(
+            state,
+            action: PayloadAction<{ reservationKey: number }>
+        ) {
+            state[action.payload.reservationKey].isShowing = false;
+        },
     },
 });
 
-export const { addReservation } = reservationSlice.actions;
+export const { postReservation, deleteReservation, hideReservation } =
+    reservationSlice.actions;
 
 export default reservationSlice;

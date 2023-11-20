@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
-import { ReactComponent as MathPlus } from '../../assets/math-plus.svg';
-import { ReactComponent as Close } from '../../assets/close.svg';
-import { ReactComponent as BackSpace } from '../../assets/keyboard_backspace.svg';
+import { ReactComponent as MathPlusIcon } from '../../assets/math-plus.svg';
+import { ReactComponent as CloseIcon } from '../../assets/close.svg';
+import { ReactComponent as BackSpaceIcon } from '../../assets/keyboard_backspace.svg';
 
 interface IPropsType {
     title: string;
@@ -18,7 +18,7 @@ function Header({ title }: IPropsType) {
                     type='button'
                     onClick={() => navigate('/new-reservation')}
                 >
-                    <MathPlus />
+                    <MathPlusIcon />
                     <span>New Reservation</span>
                 </button>
             ) : (
@@ -28,11 +28,11 @@ function Header({ title }: IPropsType) {
                     onClick={() => navigate('/')}
                     aria-label='backBtn'
                 >
-                    <BackSpace />
+                    <BackSpaceIcon />
                 </button>
             )}
             <h3>{title}</h3>
-            <Close className={styles.closeBtn} />
+            <CloseIcon className={styles.closeBtn} />
         </header>
     );
 }
