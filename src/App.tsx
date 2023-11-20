@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Main from './pages/Main/Main';
+import CreateReservation from './pages/CreateReservation/CreateReservation';
 
 function App() {
     return (
@@ -8,6 +9,10 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<Main />} />
+                    <Route
+                        path='/new-reservation'
+                        element={<CreateReservation />}
+                    />
                 </Routes>
             </BrowserRouter>
         </div>

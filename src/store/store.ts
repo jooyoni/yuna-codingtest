@@ -1,10 +1,12 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import reservationSlice from './reservationSlice';
 
 const rootReducer = combineReducers({
     //   counter: counterSlice.reducer,
     //   todo: todoSlice.reducer,
     //   user: userSlice.reducer
+    reservation: reservationSlice.reducer,
 });
 
 // const initialState = {};
